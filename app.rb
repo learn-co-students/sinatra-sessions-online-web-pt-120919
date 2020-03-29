@@ -1,4 +1,7 @@
 require_relative 'config/environment'
+# Your second lesson will be to set your session :id key to a value.
+# In the route: /set_session, write a line of code that sets the session[:id] equal to 1.
+# Then, navigate to the '/set_session' path
 
 class App < Sinatra::Base
   configure do
@@ -20,6 +23,8 @@ class App < Sinatra::Base
 
   get '/set' do
     # set the :foo key of the session hash equal to 'hello' here!
+    @session = session
+    @session[:foo] = 'hello'
     if session[:foo] == 'hello'
       redirect '/fetch'
     else
@@ -37,7 +42,8 @@ class App < Sinatra::Base
 
   get '/set_session' do
     #set session id here
-
+    @session = session
+    @session[:id] = 1
     if session[:id] == 1
       # "Session ID set. It's currently set to #{session[:id]}."
       redirect '/fetch_session_id'
@@ -52,6 +58,8 @@ class App < Sinatra::Base
 
   get '/logout' do
     #clear session hash here
+    @session = session
+    @session.clear
     "Session has now been cleared. session content: #{session.inspect}. Continue on to the '/finish' line!"
   end
 
